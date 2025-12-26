@@ -1,0 +1,36 @@
+services:
+  mpl-db:
+    image: mysql:8.0
+    env_file:
+      - .env.docker
+    restart: always
+    ports:
+      - "3306:3306"
+    volumes:
+      - "mpl_db_data:/var/lib/mysql"
+  
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: pma
+    restart: always
+    environment:
+      PMA_HOST: mpl-db
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+    ports:
+      - "8080:80"
+    depends_on:
+      - mpl-db
+
+  mpl-backend:
+    build: .
+    container_name: mpl-backend
+    restart: always
+    env_file:
+        - .env
+    ports:
+      - "8000:8000"
+    depends_on:
+      - mpl-db
+
+volumes:
+  mpl_db_data:
