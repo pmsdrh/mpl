@@ -32,11 +32,11 @@ services:
     depends_on:
       - mpl-db
 
-  nginx:
+  mpl-nginx:
     build: ./nginx
-    container_name: nginx
+    container_name: mpl-nginx
     ports:
-      - "80:80"
+      - "5137:80"
     depends_on:
       - mpl-backend
 
