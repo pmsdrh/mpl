@@ -32,5 +32,13 @@ services:
     depends_on:
       - mpl-db
 
+  nginx:
+    build: ./nginx
+    container_name: nginx
+    ports:
+      - "80:80"
+    depends_on:
+      - mpl-backend
+
 volumes:
   mpl_db_data:
